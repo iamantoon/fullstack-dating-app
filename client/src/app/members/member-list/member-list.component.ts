@@ -13,14 +13,13 @@ import { MembersService } from 'src/app/_services/members.service';
   styleUrls: ['./member-list.component.css']
 })
 export class MemberListComponent implements OnInit {
-  // members$: Observable<Member[]> | undefined;
   members: Member[] = [];
   pagination: Pagination | undefined;
   userParams: UserParams | undefined;
   genderList = [{value: 'male', display: 'Males'}, {value: 'female', display: 'females'}];
 
   constructor(private memberService: MembersService){
-    this.userParams = this.memberService.getUserParams();
+    this.userParams = this.memberService.getUserParams(); 
   }
 
   ngOnInit(): void {
@@ -28,6 +27,7 @@ export class MemberListComponent implements OnInit {
   }
 
   loadMembers(){
+    console.log(this.userParams); // returns undefined
     if (this.userParams){
       this.memberService.setUserParams(this.userParams);
       this.memberService.getMembers(this.userParams).subscribe({

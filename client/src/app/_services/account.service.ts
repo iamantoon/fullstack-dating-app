@@ -12,35 +12,36 @@ export class AccountService {
   private currentUserSource = new BehaviorSubject<User | null>(null);
   currentUser$ = this.currentUserSource.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  login(model: any){
-    return this.http.post<User>(this.baseUrl + 'account/login', model).pipe(  // We're returning an Observable from our service 
-      map(response => {
+  login(model: any) {
+    return this.http.post<User>(this.baseUrl + 'account/login', model).pipe(
+      map((response: User) => {
         const user = response;
-        if (user){
-          this.setCurrentUser(user);
-        }
-      })
-    ) 
-  }
-  
-  register(model: any){
-    return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(
-      map(user => {
-        if (user){
+        if (user) {
           this.setCurrentUser(user);
         }
       })
     )
   }
 
-  setCurrentUser(user: User){
+  register(model: any) {
+    return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(
+      map(response => {
+        const user = response;
+        if (user) {
+          this.setCurrentUser(user);
+        }
+      })
+    )
+  }
+
+  setCurrentUser(user: User) {
     localStorage.setItem('user', JSON.stringify(user));
     this.currentUserSource.next(user);
   }
 
-  logout(){
+  logout() {
     localStorage.removeItem('user');
     this.currentUserSource.next(null);
   }

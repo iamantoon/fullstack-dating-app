@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from './_services/account.service';
 import { User } from './_models/user';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +21,6 @@ export class AppComponent implements OnInit {
     this.setCurrentUser();
   }
 
-  
   setCurrentUser(){
     // const user: User = JSON.parse(localStorage.getItem('user'));
     const userString = localStorage.getItem('user');
